@@ -32,4 +32,4 @@ class Task(models.Model):
         null=True,
         blank=True
     )
-    STATUS = models.CharField(max_length=50, choices=STATUS_CHOICES, default='New')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='New')
