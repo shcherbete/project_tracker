@@ -33,3 +33,6 @@ class Task(models.Model):
         blank=True
     )
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='New')
+
+    def __str__(self):
+        return self.name

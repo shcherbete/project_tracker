@@ -1,5 +1,23 @@
 from django.contrib import admin
 from .models import Project, Task
+from quality_control.models import BugReport, FeatureRequest
+
+
+class BugReportInline(admin.TabularInline):
+    model = BugReport
+    extra = 0
+    fields = ('title', 'description', 'project', 'task', 'status', 'priority')
+    readonly_field = 'created_at'
+    can_delete = True
+    show_change_link = True
+
+class FeatureRequestInline(admin.TabularInline):
+    model = FeatureRequest
+    extra = 0
+    fields = ('title', 'description', 'project', 'task', 'status', 'priority')
+    readonly_field = 'created_at'
+    can_delete = True
+    show_change_link = True
 
 class TaskInline(admin.TabularInline):
     model = Task
@@ -17,7 +35,7 @@ class ProjectAdmin(admin.ModelAdmin):
     ordering = ('created_at',)
     date_hierarchy = 'created_at'
 
-    inlines = [TaskInline]
+    inlines = [TaskInline, BugReportInline, FeatureRequestInline]
 
 
 
@@ -29,3 +47,5 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_editable = ('status', 'assignee')
     readonly_fields = ('created_at', 'updated_at')
+
+    inlines = [BugReportInline, FeatureRequestInline]
