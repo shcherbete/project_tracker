@@ -26,6 +26,7 @@
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/templates/base" />
         <option value="$MODULE_DIR$/tasks/templates" />
+        <option value="$MODULE_DIR$/quality_control/templates" />
       </list>
     </option>
   </component>
