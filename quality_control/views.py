@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import DetailView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import BugReportForm, FeatureRequestForm
 
 from .models import BugReport, FeatureRequest
 
@@ -54,6 +55,7 @@ class BugDetailView(DetailView):
     pk_url_kwarg = "bug_id"
     template_name = 'quality_control/bug_detail.html'
 
+
 # def bug_detail(request, bug_id):
 #     bug = get_object_or_404(BugReport, id=bug_id)
 #     response_html = (f'<h1>{bug.title}</h1><p>{bug.description}</p>'
@@ -83,3 +85,24 @@ class FeatureDetailView(DetailView):
     #     response_html += f'<p>Задача: {feature.task.name}</p>'
     #     response_html += '</ul>'
     #     return HttpResponse(response_html)
+
+
+def add_bug(request):
+    if request.method == 'POST':
+        form = BugReportForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:bug_list')
+    else:
+        form = BugReportForm()
+    return render(request, 'quality_control/add_bug.html', {'form': form})
+
+def add_feature(request):
+    if request.method == 'POST':
+        form = FeatureRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('quality_control:feature_list')
+    else:
+        form = FeatureRequestForm()
+    return render(request, 'quality_control/add_feature.html', {'form': form})
